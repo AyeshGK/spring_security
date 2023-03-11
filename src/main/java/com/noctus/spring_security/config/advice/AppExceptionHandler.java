@@ -1,4 +1,4 @@
-package com.noctus.spring_security.advice;
+package com.noctus.spring_security.config.advice;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

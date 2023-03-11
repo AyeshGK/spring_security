@@ -1,9 +1,9 @@
 package com.noctus.spring_security.controller;
 
 import com.noctus.spring_security.exception.UserAlreadyExistsException;
-import com.noctus.spring_security.payload.request.SignInRequest;
-import com.noctus.spring_security.payload.request.SignUpRequest;
-import com.noctus.spring_security.payload.response.AuthResponse;
+import com.noctus.spring_security.dto.request.SignInRequest;
+import com.noctus.spring_security.dto.request.SignUpRequest;
+import com.noctus.spring_security.dto.response.AuthResponse;
 import com.noctus.spring_security.controller.service.AuthenticationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

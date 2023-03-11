@@ -1,4 +1,4 @@
-package com.noctus.spring_security.payload.response;
+package com.noctus.spring_security.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
