@@ -1,6 +1,7 @@
 package com.noctus.spring_security.config;
 
 import com.noctus.spring_security.config.jwt.JwtAuthenticationFilter;
+import com.noctus.spring_security.model.ERole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,10 +26,35 @@ public class SecurityConfig {
 //        String[] whitelist = {"/api/v1/auth/**", "/api/v1/home**"};
 //        add whitelist to permitAll()
 
+//        http.
+//                csrf().disable()
+//                .authorizeHttpRequests()
+//                .requestMatchers("/api/v1/auth/**", "/api/v1/home**").permitAll()
+//                .anyRequest().authenticated()
+//                .and()
+//                .authorizeHttpRequests()
+//                .requestMatchers("/api/v1/user/test").hasAuthority("ADMIN")
+//                .and()
+//                .sessionManagement()
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
+//                .authenticationProvider(authenticationProvider)
+//                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+
+
         http.
                 csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/api/v1/auth/**", "/api/v1/home**").permitAll()
+                .and()
+                .authorizeHttpRequests()
+                .requestMatchers("/api/v1/admin/**").hasAuthority(ERole.ADMIN.name())
+                .requestMatchers("/api/v1/user/**").hasAuthority(ERole.USER.name())
+                .requestMatchers("/api/v1/multi/**").hasAnyAuthority(
+                        ERole.MODERATOR.name(),
+                        ERole.ADMIN.name(),
+                        ERole.SUPER_ADMIN.name()
+                )
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
@@ -36,7 +62,6 @@ public class SecurityConfig {
                 .and()
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-
         return http.build();
     }
 

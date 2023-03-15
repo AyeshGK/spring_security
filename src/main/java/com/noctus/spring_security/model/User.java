@@ -1,18 +1,17 @@
 package com.noctus.spring_security.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,7 +19,7 @@ import java.util.List;
 @Table(name = "_user")
 public class User implements UserDetails {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String firstname;
     private String lastname;
@@ -29,13 +28,29 @@ public class User implements UserDetails {
     private String email;
     private String password;
 
-    @Enumerated(EnumType.STRING)
+//    @ManyToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinTable(
+//            name = "user_roles",
+//            joinColumns = {
+//                    @JoinColumn(name = "user_id", referencedColumnName = "id")
+//            },
+//            inverseJoinColumns = {
+//                    @JoinColumn(name = "role_id", referencedColumnName = "id")
+//            }
+//    )
+//    @JsonManagedReference
+//    private Set<Role> roles;
+
+    @JoinColumn(name = "role_id", referencedColumnName = "id")
+    @ManyToOne
     private Role role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+//        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).toList();
+        return List.of(new SimpleGrantedAuthority(role.getName()));
     }
+
 
     @Override
     public String getPassword() {
@@ -66,4 +81,5 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

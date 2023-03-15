@@ -3,8 +3,8 @@ POST http://localhost:8080/api/v1/auth/login
 Content-Type: application/json
 
 {
-  "email": "admin@gmail.com",
-  "password": "admin"
+  "email": "user@gmail.com",
+  "password": "password"
 }
 
 
@@ -24,9 +24,17 @@ POST http://localhost:8080/api/v1/auth/signup
 Content-Type: application/json
 
 {
-  "email": "admin2gmail.com",
-  "firstname": "",
-  "lastname": "admin2",
-  "password": "admin"
+  "email": "user5@gmail.com",
+  "firstname": "user3",
+  "lastname": "user3",
+  "password": "password1A@"
 }
 
+
+###
+POST http://localhost:8080/api/v1/auth/refresh
+Content-Type: application/json
+
+{
+  "refresh_token":"714c94a2-8fd7-4c97-8678-9e4a60efcf16"
+}

@@ -7,16 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/user")
+@RequestMapping("/api/v1/multi")
 @RequiredArgsConstructor
-public class UserController {
-    /**
-     * test mapping
-     * this mapping woks only for authenticated users
-     * */
-
+public class MultiController {
     @GetMapping("/test")
     public ResponseEntity<String> test() {
-        return ResponseEntity.ok("Secured test endpoint only for users.");
+        return ResponseEntity.ok("Secured test endpoint only for moderators,admins and super admins.");
     }
 }

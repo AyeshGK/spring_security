@@ -2,6 +2,8 @@ package com.noctus.spring_security.config.advice;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.noctus.spring_security.exception.InvalidJwtTokenException;
+import com.noctus.spring_security.exception.InvalidRefreshTokenException;
 import com.noctus.spring_security.exception.UserAlreadyExistsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -40,5 +42,15 @@ public class AppExceptionHandler {
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(response);
         return mapper.readValue(json, Map.class);
+    }
+
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(InvalidRefreshTokenException.class)
+    public Map<String, String> handleInvalidRefreshTokenException(InvalidRefreshTokenException e) {
+        return Map.of(
+                "message", e.getMessage(),
+                "status", HttpStatus.FORBIDDEN.toString(),
+                "success", "false"
+        );
     }
 }
